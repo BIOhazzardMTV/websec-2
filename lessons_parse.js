@@ -76,7 +76,17 @@ async function parseSsauSchedule(url) {
                             });
                         });
                     }
+                } else {
+                    const directGroupLinks = lessonInfoDiv.find('a.caption-text.schedule__group');
+                    directGroupLinks.each((_, link) => {
+                        const $link = $(link);
+                        groupsInfo.push({
+                            number: $link.text().trim(),
+                            href: $link.attr('href')
+                        });
+                    });
                 }
+
 
                 const lessonData = {
                     discipline,

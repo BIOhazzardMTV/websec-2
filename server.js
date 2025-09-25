@@ -64,15 +64,26 @@ app.get('/api/search', async (req, res) => {
 app.get('/api/schedule', async (req, res) => {
     try {
         const groupId = req.query.groupId;
+        const staffId = req.query.staffId;
         const week = req.query.week;
+
+        let fname = null;
+
         if (groupId && week) {
-            const fname = `schedule_${groupId}_${week}.json`;
+            fname = `schedule_group_${groupId}_${week}.json`;
+        } else if (staffId && week) {
+            fname = `schedule_staff_${staffId}_${week}.json`;
+        }
+
+        if (fname) {
             const specific = await readJsonSafe(fname);
             if (specific) return res.json({ meta: { for: 'specific' }, data: specific });
         }
+
         const fallback = await readJsonSafe('schedule.json');
         if (fallback) return res.json({ meta: { for: 'fallback' }, data: fallback });
-        res.status(404).json({ error: 'Файл расписания не найден. Запустите /api/refresh-schedule или поместите data/schedule.json' });
+
+        res.status(404).json({ error: 'Файл расписания не найден' });
     } catch (err) {
         res.status(500).json({ error: 'Ошибка сервера при чтении расписания' });
     }
@@ -135,7 +146,6 @@ if (fs.existsSync(PUBLIC_DIR)) {
     console.warn('Public dir not found:', PUBLIC_DIR);
 }
 
-app.get('/health', (req, res) => res.json({ ok: true }));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
