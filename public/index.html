@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Расписание (демо)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Расписание</h1>
+            <div class="controls">
+                <div class="search-block">
+                    <input id="searchInput" type="search" placeholder="Номер группы или ФИО преподавателя" autocomplete="off">
+                    <div id="suggestions" class="suggestions"></div>
+                </div>
+
+                <div class="week-block">
+                    <label for="weekInput">Учебная неделя №</label>
+                    <input id="weekInput" type="number" min="1" value="1">
+                    <button id="applyWeekBtn">Применить</button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="info">
+                <div>Выбрано: <span id="selectedLabel">—</span></div>
+                <div id="currentWeekInfo">Автовыбор недели...</div>
+            </section>
+
+            <section class="timetable">
+                <table id="timetable">
+                    <!-- Таблица будет сгенерирована динамически -->
+                </table>
+            </section>
+        </main>
+
+        <footer>
+            <small>Здесь могла быть ваша реклама😉</small>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
